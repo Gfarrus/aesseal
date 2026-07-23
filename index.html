@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdSmart × Aesseal Argentina — AI Hunter</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0A1628; --navy2: #0D1E38; --steel: #152540;
+    --azure: #4A9EE8; --azure-dim: rgba(74,158,232,0.12);
+    --orange: #F97316; --orange-dim: rgba(249,115,22,0.10);
+    --green: #22a855;
+    --white: #FFFFFF; --w70: rgba(255,255,255,0.70);
+    --w40: rgba(255,255,255,0.40); --w15: rgba(255,255,255,0.08);
+    --w08: rgba(255,255,255,0.04); --border: rgba(74,158,232,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 48px; border-bottom: 1px solid var(--border); background: rgba(10,22,40,0.97); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+  .nav-logos { display: flex; align-items: center; gap: 20px; }
+  .nav-sep { width: 1px; height: 32px; background: var(--border); }
+  .nav-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; color: var(--w40); text-transform: uppercase; }
+  .nav-date { font-size: 12px; color: var(--w40); }
+
+  /* ADSMART LOGO SVG */
+  .logo-adsmart { display: flex; align-items: center; gap: 0; }
+
+  /* NOA LOGO SVG */
+  .logo-noa { display: flex; align-items: center; }
+
+  /* HERO */
+  .hero { padding: 80px 48px 64px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--azure); margin-bottom: 24px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--azure); }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 64px; line-height: 0.95; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .hero h1 .accent { color: var(--orange); }
+  .hero-sub { font-size: 15px; color: var(--w70); line-height: 1.65; max-width: 420px; margin-bottom: 24px; }
+
+  /* PROVINCIAS PILLS */
+  .provincias { display: flex; flex-wrap: wrap; gap: 8px; }
+  .prov-pill { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); padding: 6px 14px; border-radius: 20px; background: var(--w08); border: 1px solid var(--border); }
+  .prov-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--azure); flex-shrink: 0; }
+
+  /* DEAL CARD */
+  .deal-card { background: var(--w08); border: 1px solid var(--border); border-radius: 16px; padding: 32px; position: relative; overflow: hidden; }
+  .deal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--azure), var(--orange)); }
+  .deal-label { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--w40); margin-bottom: 24px; }
+  .deal-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--w15); gap: 12px; }
+  .deal-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .deal-concept { font-size: 13px; font-weight: 500; color: var(--w70); }
+  .deal-note { font-size: 11px; color: var(--w40); margin-top: 3px; }
+  .deal-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--white); letter-spacing: 0.02em; text-align: right; }
+  .deal-value.orange { color: var(--orange); }
+  .deal-value.azure { color: var(--azure); }
+  .deal-group { text-align: right; flex-shrink: 0; }
+
+  /* DESCUENTO BADGE */
+  .descuento-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(34,168,85,0.12); border: 1px solid rgba(34,168,85,0.35); border-radius: 6px; padding: 10px 16px; margin-bottom: 20px; width: 100%; }
+  .descuento-icon { font-size: 16px; }
+  .descuento-text { font-size: 12px; color: var(--w70); line-height: 1.5; }
+  .descuento-text strong { color: #4ade80; font-weight: 600; }
+
+  /* DIVIDER */
+  .divider { max-width: 1100px; margin: 0 auto; border: none; border-top: 1px solid var(--border); }
+
+  /* SECTIONS */
+  section { max-width: 1100px; margin: 0 auto; padding: 64px 48px; }
+  .section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--azure); margin-bottom: 36px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* PLATAFORMA */
+  .platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .platform-card { background: var(--w08); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; transition: border-color 0.2s, background 0.2s; }
+  .platform-card:hover { border-color: var(--azure); background: var(--azure-dim); }
+  .platform-icon { width: 40px; height: 40px; background: var(--azure-dim); border: 1px solid rgba(74,158,232,0.25); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .platform-card h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+  .platform-card p { font-size: 13px; color: var(--w70); line-height: 1.6; }
+  .platform-tag { display: inline-block; margin-top: 14px; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--azure); padding: 4px 10px; border: 1px solid rgba(74,158,232,0.3); border-radius: 4px; }
+
+  /* MODELO */
+  .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .model-block { border-radius: 14px; padding: 32px; position: relative; overflow: hidden; }
+  .model-block.primary { background: var(--azure-dim); border: 1px solid rgba(74,158,232,0.35); }
+  .model-block.accent { background: var(--orange-dim); border: 1px solid rgba(249,115,22,0.3); }
+  .model-type { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 12px; }
+  .model-block.primary .model-type { color: var(--azure); }
+  .model-block.accent .model-type { color: var(--orange); }
+  .model-amount { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 52px; line-height: 1; margin-bottom: 6px; }
+  .model-block.primary .model-amount { color: var(--white); }
+  .model-block.accent .model-amount { color: var(--orange); }
+  .model-period { font-size: 13px; color: var(--w40); margin-bottom: 16px; }
+  .model-discount { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #4ade80; background: rgba(34,168,85,0.1); border: 1px solid rgba(34,168,85,0.3); padding: 4px 10px; border-radius: 4px; margin-bottom: 16px; }
+  .model-items { list-style: none; }
+  .model-items li { font-size: 13px; color: var(--w70); padding: 5px 0 5px 16px; position: relative; line-height: 1.5; }
+  .model-items li::before { content: '→'; position: absolute; left: 0; font-size: 11px; color: var(--w40); }
+  .model-condition { background: var(--w08); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; }
+  .model-condition p { font-size: 13px; color: var(--w70); line-height: 1.55; }
+  .model-condition strong { color: var(--white); font-weight: 600; }
+
+  /* OBLIGACIONES */
+  .obligations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .obl-col h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .obl-col.adsmart h3 { color: var(--azure); }
+  .obl-col.noa h3 { color: var(--orange); }
+  .obl-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--w15); align-items: flex-start; }
+  .obl-item:last-child { border-bottom: none; }
+  .obl-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .adsmart .obl-dot { background: var(--azure); }
+  .noa .obl-dot { background: var(--orange); }
+  .obl-text { font-size: 13px; color: var(--w70); line-height: 1.55; }
+
+  /* LEGAL */
+  .legal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .legal-card { background: var(--w08); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; }
+  .legal-title { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--white); margin-bottom: 6px; }
+  .legal-desc { font-size: 12px; color: var(--w40); line-height: 1.55; }
+
+  /* DATA NOA */
+  .data-banner { background: linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(74,158,232,0.06) 100%); border: 1px solid rgba(249,115,22,0.25); border-radius: 14px; padding: 28px 32px; display: flex; align-items: flex-start; gap: 20px; }
+  .data-banner-icon { width: 44px; height: 44px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .data-banner-content h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 17px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--orange); margin-bottom: 8px; }
+  .data-banner-content p { font-size: 13px; color: var(--w70); line-height: 1.6; margin-bottom: 14px; }
+  .data-sources { display: flex; flex-wrap: wrap; gap: 8px; }
+  .data-source-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); padding: 4px 12px; border: 1px solid rgba(249,115,22,0.35); border-radius: 4px; background: rgba(249,115,22,0.06); }
+  .data-ownership { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(249,115,22,0.15); font-size: 12px; color: var(--w40); display: flex; align-items: flex-start; gap: 8px; line-height: 1.55; }
+  .data-ownership strong { color: var(--w70); font-weight: 600; }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, #0D1E38 0%, #0A1628 100%); border-top: 1px solid var(--border); padding: 64px 48px; text-align: center; }
+  .cta-inner { max-width: 560px; margin: 0 auto; }
+  .cta-section h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 44px; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.05; margin-bottom: 16px; }
+  .cta-section h2 span { color: var(--orange); }
+  .cta-section p { font-size: 14px; color: var(--w70); margin-bottom: 36px; line-height: 1.6; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--orange); color: var(--white); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; padding: 16px 36px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .cta-btn:hover { background: #e86010; transform: translateY(-1px); }
+  .cta-contact { margin-top: 28px; font-size: 13px; color: var(--w40); }
+  .cta-contact a { color: var(--azure); text-decoration: none; }
+
+  /* FOOTER */
+  footer { padding: 20px 48px; border-top: 1px solid var(--w15); display: flex; justify-content: space-between; align-items: center; }
+  footer span { font-size: 11px; color: var(--w40); letter-spacing: 0.05em; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; flex-wrap: wrap; gap: 12px; }
+    .hero { grid-template-columns: 1fr; padding: 48px 24px 40px; gap: 36px; }
+    .hero h1 { font-size: 44px; }
+    section { padding: 48px 24px; }
+    .platform-grid, .model-grid, .obligations-grid, .legal-grid { grid-template-columns: 1fr; }
+    .data-banner { flex-direction: column; }
+    footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
+  }
+
+  /* PDF page break control */
+  @media print {
+    section, .platform-card, .model-block, .obl-col, .legal-card,
+    .data-banner, .model-condition, .deal-card, .hero, .cta-section,
+    .platform-grid, .model-grid, .obligations-grid, .legal-grid {
+      page-break-inside: avoid;
+    }
+    nav { position: relative !important; }
+    .hero { padding-top: 40px !important; }
+    section { padding: 40px 48px !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logos">
+    <!-- AdSmart Logo -->
+    <svg width="165" height="46" viewBox="0 0 165 46" xmlns="http://www.w3.org/2000/svg">
+  <text x="0" y="30" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="29" fill="#FFFFFF" letter-spacing="-0.5">AdSmart</text>
+  <text x="131" y="30" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="29" fill="#F97316">.</text>
+  <text x="1" y="44" font-family="Arial, sans-serif" font-weight="400" font-size="9.5" fill="rgba(255,255,255,0.45)" letter-spacing="3">BUSINESS DEVELOPMENT</text>
+</svg>
+    <div class="nav-sep"></div>
+    <span style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:18px; letter-spacing:0.06em; color:var(--w70);">AESSEAL ARGENTINA</span>
+  </div>
+  <div class="nav-tag">Propuesta Comercial Confidencial</div>
+  <div class="nav-date">Julio 2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Aesseal Argentina × AdSmart</div>
+    <h1>AI HUNTER<br><span class="accent">PARTNER</span><br>PROGRAM</h1>
+    <p class="hero-sub">Inteligencia de prospectos O&amp;G/Minería en tiempo real. Licitaciones activas, directorio de decisores y pipeline calificado — con tus propias fuentes integradas.</p>
+    <div class="provincias">
+      <div class="prov-pill"><div class="prov-dot"></div>Neuquén</div>
+    </div>
+  </div>
+
+  <div class="deal-card">
+
+    <!-- PRECIOS DE LISTA -->
+    <div style="margin-bottom:20px;">
+      <div class="deal-label" style="margin-bottom:14px;">PRECIO DE LISTA — AI HUNTER INDUSTRY</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+
+        <div style="background:var(--w08); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--azure); margin-bottom:8px;">PLAN BASE</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:32px; color:var(--white); line-height:1;">USD 2.000</div>
+          <div style="font-size:11px; color:var(--w40); margin-bottom:10px;">por mes · contrato mín. 3 meses</div>
+          <div style="font-size:11px; color:var(--w70); line-height:1.8;">15 hs gestión/mes<br>1 viaje presencial/mes<br>Scoring Hunter AI<br>1.200+ decisores verificados<br>Email · LinkedIn · DV360 · WA<br>Presencia en 1 cuenca<br>Pipeline + reporte semanal<br>Mesa de Trabajo AI: 2 agentes</div>
+        </div>
+
+        <div style="background:var(--w08); border:1px solid rgba(249,115,22,0.3); border-radius:10px; padding:16px 18px; position:relative;">
+          <div style="position:absolute; top:-1px; right:12px; background:var(--orange); font-size:9px; font-weight:700; letter-spacing:0.1em; color:#fff; padding:3px 8px; border-radius:0 0 4px 4px;">RECOMENDADO</div>
+          <div style="font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--orange); margin-bottom:8px;">COMBO — TODAS LAS CUENCAS</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:32px; color:var(--white); line-height:1;">USD 3.800</div>
+          <div style="font-size:11px; color:var(--w40); margin-bottom:10px;">por mes · contrato 6 meses</div>
+          <div style="font-size:11px; color:var(--w70); line-height:1.8;">20 hs gestión/mes<br>Hasta 3 viajes presenciales/mes<br>Todo lo del plan base<br>[TERRITORIOS] activos<br>Scoring Hunter AI avanzado<br>Mesa de Trabajo AI: 10 agentes C-Suite<br>AdSmart OS dashboard en tiempo real<br>Gestión activa + acomp. en cierre</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACUERDO NOA -->
+    <div style="border-top:2px solid var(--orange); padding-top:16px; margin-bottom:14px;">
+      <div style="font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">ACUERDO COMERCIAL NOA — CONDICIÓN ESPECIAL</div>
+    </div>
+
+    <div class="deal-row">
+      <div>
+        <div class="deal-concept">Tech Fee — Meses 1 a 3</div>
+        <div class="deal-note">Período introductorio · [N] provincias / territorios activos</div>
+      </div>
+      <div class="deal-group">
+        <div class="deal-value azure" style="font-size:22px;">USD 1.500</div>
+        <div class="deal-note">/ mes</div>
+      </div>
+    </div>
+
+    <div class="deal-row">
+      <div>
+        <div class="deal-concept">Tech Fee — Mes 4 en adelante</div>
+        <div class="deal-note">A negociar según cuencas y volumen</div>
+      </div>
+      <div class="deal-group">
+        <div class="deal-value" style="font-size:14px; color:var(--w70);">A CONVENIR</div>
+        <div class="deal-note">ref. USD 2.000–3.800 según cuencas activas</div>
+      </div>
+    </div>
+
+    <div class="deal-row" style="border-bottom:none;">
+      <div>
+        <div class="deal-concept">Success Fee</div>
+        <div class="deal-note">Desde mes 1 · 6 meses por venta · persiste post-terminación</div>
+      </div>
+      <div class="deal-group">
+        <div class="deal-value orange">5%</div>
+        <div class="deal-note">sobre margen neto declarado</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PLATAFORMA -->
+<section>
+  <div class="section-label">La Plataforma</div>
+  <div class="platform-grid">
+
+    <div class="platform-card">
+      <div class="platform-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A9EE8" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <h3>AI Hunter</h3>
+      <p>Motor de prospección con scraping de licitaciones activas (COMPR.AR, BON, ENARGAS) y directorio de decisores O&amp;G/Minería filtrado por provincia, cuenca y cargo.</p>
+      <span class="platform-tag">Radar Motor</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A9EE8" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Directorio</h3>
+      <p>28M+ registros segmentados. Decisores de compras y gerentes de ingeniería en empresas activas en Neuquén, Vaca Muerta y cuenca Comahue — más las fuentes propias de Aesseal integradas.</p>
+      <span class="platform-tag">Datiko 28M</span>
+    </div>
+
+    <div class="platform-card">
+      <div class="platform-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A9EE8" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Pipeline</h3>
+      <p>Workspace exclusivo NOA con kanban de oportunidades. Cada prospecto registrado antes del cierre es la fuente auditable para el cálculo del success fee.</p>
+      <span class="platform-tag">AdSmart OS</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- MODELO COMERCIAL -->
+<section>
+  <div class="section-label">Modelo Comercial</div>
+
+  <div class="model-grid">
+    <div class="model-block primary">
+      <div class="model-type">Tech Fee — Meses 1 a 3</div>
+      <div class="model-amount" style="font-size:46px;">USD 1.500</div>
+      <div class="model-period">USD/mes · facturación anticipada</div>
+      <div class="model-discount">🏷️ Período introductorio 3 meses</div>
+      <ul class="model-items">
+        <li>[N] provincias / territorios activos: NOA + Cuyo</li>
+        <li>Licitaciones activas en tiempo real</li>
+        <li>Directorio con filtros por cargo y cuenca</li>
+        <li>Integración de fuentes propias de Aesseal</li>
+        <li>Actualizaciones y soporte AdSmart incluidos</li>
+      </ul>
+    </div>
+
+    <div class="model-block primary" style="border-color: rgba(74,158,232,0.2);">
+      <div class="model-type">Tech Fee — Mes 4 en adelante</div>
+      <div class="model-amount" style="font-size:36px;">A negociar</div>
+      <div class="model-period">según cuencas y volumen de operaciones</div>
+      <div class="model-discount" style="color: var(--azure);">📋 Referencia de lista pública</div>
+      <ul class="model-items">
+        <li>Una cuenca: USD 2.000/mes</li>
+        <li>Todas las cuencas (9 provincias): USD 3.800/mes</li>
+        <li>Revisión conjunta al mes 3 según resultados</li>
+        <li>Fee ajustable según volúmenes de ventas</li>
+        <li>Condiciones a pactar de común acuerdo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="model-block accent" style="margin-bottom: 24px; border-radius: 14px; padding: 32px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+      <div>
+        <div class="model-type">Success Fee</div>
+        <div class="model-amount">5%</div>
+        <div class="model-period">sobre margen neto · desde el mes 1</div>
+        <div class="model-discount">⚡ Independiente del tech fee</div>
+      </div>
+      <ul class="model-items" style="padding-top: 8px;">
+        <li>Corre desde el primer mes, incluso en período bonificado</li>
+        <li>Aplica sobre margen neto declarado por NOA</li>
+        <li>6 meses de vigencia por cada venta cerrada</li>
+        <li>Persiste aunque NOA no renueve el servicio mensual</li>
+        <li>Ajustable según volumen de ventas al mes 6</li>
+        <li>DDJJ mensual como fuente de verdad</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="model-condition">
+    <div style="font-size:24px; flex-shrink:0;">⚡</div>
+    <p><strong>Atribución de oportunidades:</strong> cada prospecto trabajado desde la plataforma se registra en el Pipeline de AI Hunter antes del cierre. Este log es la fuente de verdad para el cálculo del success fee — sin CRM externo, sin fricción adicional.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- DATOS PROPIOS NOA -->
+<section>
+  <div class="section-label">Datos Propios de Aesseal</div>
+
+  <div class="data-banner">
+    <div class="data-banner-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+    </div>
+    <div class="data-banner-content">
+      <h4>Tu Inteligencia. Tu Ventaja Competitiva.</h4>
+      <p>Aesseal puede incorporar sus propias fuentes de datos a AI Hunter — cámaras industriales, registros provinciales, bases empresariales propias. Esa inteligencia se integra al directorio y al radar de licitaciones, construyendo una ventaja que ningún otro operador tiene.</p>
+      <div class="data-sources">
+        <span class="data-source-tag">Cámaras Industriales</span>
+        <span class="data-source-tag">Registros Provinciales</span>
+        <span class="data-source-tag">Bases Empresariales</span>
+        <span class="data-source-tag">Fuentes Sectoriales</span>
+      </div>
+      <div class="data-ownership">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span><strong>Propiedad exclusiva de Aesseal.</strong> Los datos aportados quedan disponibles solo dentro del workspace de Aesseal en AI Hunter — no se exportan fuera de la plataforma, no se comparten con terceros, no se incorporan a otros workspaces. AdSmart actúa como custodio técnico, no como propietario.</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- OBLIGACIONES -->
+<section>
+  <div class="section-label">Compromisos Mutuos</div>
+  <div class="obligations-grid">
+    <div class="obl-col adsmart">
+      <h3>AdSmart Media</h3>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Mantener y mejorar AI Hunter con fuentes activas para Neuquén y cuenca Comahue</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Incorporar nuevas fuentes de licitaciones según feedback operativo de Aesseal</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Integrar las fuentes propias de Aesseal al workspace de forma segura</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Garantizar uptime de plataforma y soporte técnico continuo</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Confidencialidad absoluta sobre operaciones, datos y pipeline de Aesseal</div></div>
+    </div>
+
+    <div class="obl-col noa">
+      <h3>NOA Generación</h3>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Registrar oportunidades en plataforma antes de avanzar al cierre</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Declaración mensual de contratos cerrados vía AI Hunter con margen declarado</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">Pago del tech fee mensual los primeros 5 días hábiles</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">No compartir acceso ni exportar datos de la plataforma a terceros</div></div>
+      <div class="obl-item"><div class="obl-dot"></div><div class="obl-text">No sublicenciar ni replicar la plataforma o su metodología</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROTECCIÓN LEGAL -->
+<section>
+  <div class="section-label">Marco Legal</div>
+  <div class="legal-grid">
+    <div class="legal-card">
+      <div class="legal-title">Confidencialidad de Datos</div>
+      <div class="legal-desc">El directorio y las fuentes de licitaciones son propiedad de AdSmart. Los datos propios de Aesseal son propiedad de Aesseal. Ninguna parte puede compartir información de la otra con terceros.</div>
+    </div>
+    <div class="legal-card">
+      <div class="legal-title">Propiedad Intelectual</div>
+      <div class="legal-desc">AI Hunter y su metodología son propiedad de AdSmart Media. NOA obtiene una licencia de uso no exclusiva para Neuquén y cuenca Comahue. No se permite sublicenciar ni replicar.</div>
+    </div>
+    <div class="legal-card">
+      <div class="legal-title">Declaración Jurada Mensual</div>
+      <div class="legal-desc">NOA declara mensualmente los contratos cerrados originados en la plataforma: razón social, monto, margen y número de licitación. Documento auditable para el cálculo del success fee.</div>
+    </div>
+    <div class="legal-card">
+      <div class="legal-title">Vigencia y Renovación</div>
+      <div class="legal-desc">Acuerdo inicial de 6 meses. Renovación automática salvo aviso de 30 días. Al mes 6 se revisan condiciones de success fee según volumen de operaciones cerradas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>LISTOS PARA<br><span>ARRANCAR</span></h2>
+    <p>El workspace Aesseal está configurado para Neuquén y cuenca Comahue. Solo falta la firma para activar el acceso completo.</p>
+    <a href="https://app.zapsign.co/verificar/72a92343-2fa0-4211-a538-7b9806af47e6"
+       target="_blank" rel="noopener noreferrer" class="cta-btn">
+      Firmar Acuerdo →
+    </a>
+    <p style="margin-top:14px; font-size:12px; color:var(--w40);">
+      Firma digital oficial · ZapSign · Válido legalmente en Argentina
+    </p>
+    <div class="cta-contact">
+      Gonzalo Farrus · <a href="mailto:gfarrus@adsmartm.com">gfarrus@adsmartm.com</a> · <a href="https://calendly.com/adsmartm/30min">Agendar call</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>AdSmart Media × Aesseal Argentina · Propuesta Confidencial</span>
+  <span>MACHINE DELIVERED RESULTS.</span>
+  <span>Julio 2026</span>
+</footer>
+
+</body>
+</html>
